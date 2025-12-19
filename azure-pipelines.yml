@@ -3,35 +3,39 @@ trigger:
     include:
       - "main"
 
-pool:
+pool: "ibmpool"
 
 variables:
-- name: 
-  value:
+- name: BuildConfiguration
+  value: Release
 
 stages:
-  - stage: 
+  - stage: Buildstage
     jobs:
-      - job: 
+      - job: buildjob
         steps:
 
         - task: DotNetCoreCLI@2
+          displayName: dotnetrestore
           inputs:
             command: 'restore'
             projects: 'IBMcode/IBMcode/IBMcode.csproj'
             feedsToUse: 'select'
 
         - task: DotNetCoreCLI@2
+          displayName: dotnetbuild
           inputs:
             command: 'build'
             projects: 'IBMcode/IBMcode/IBMcode.csproj'
 
         - task: DotNetCoreCLI@2
+          displayName: dotnettest
           inputs:
             command: 'test'
             projects: 'IBMcode/IBMcode/IBMcode.csproj'
 
         - task: DotNetCoreCLI@2
+          displayName: dotnetpublish
           inputs:
             command: 'publish'
             publishWebProjects: true
