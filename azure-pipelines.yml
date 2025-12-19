@@ -31,4 +31,13 @@ stages:
             command: 'test'
             projects: 'IBMcode/IBMcode/IBMcode.csproj'
 
-        
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'publish'
+            publishWebProjects: true
+
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'drop'
+            publishLocation: 'Container'
